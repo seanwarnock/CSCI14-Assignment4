@@ -26,15 +26,69 @@ program logic.
 #include <iostream>
 #include <iomanip>
 #include <math.h>
+#include <fstream>
 #ifdef _WIN32
-  #include <windows.h>
   #include <winsock2.h>
+  #include <windows.h>
 #endif
 #ifdef __linux__
 
 #endif
 
-int main ()
+using namespace std;
+
+void WriteDataFile ()
 {
 
+  std::ifstream inFile ("Personnl.Dat", std::ifstream::in);
+  //ifstream inFile(“Personnl.Dat”, ios::ifstream::in);
+  char c = inFile.get();
+
+  while (inFile.good()) {
+    std::cout << c;
+    c = inFile.get();
+  }
+  system("pause");
+}
+
+void ReadDataFile ()
+{
+
+
+}
+
+int main ()
+{
+  bool boolExitProgram = false;
+
+  do
+  {
+    char charMenuChoice;
+
+    system("cls");
+    cout << "[1] Enter payroll information." << endl;
+    cout << "[2] Display payroll information" << endl;
+    cout << "[9] End program" << endl;
+
+    cin >> charMenuChoice;
+
+    switch  (charMenuChoice)
+    {
+      case '1' :
+        cout << "Payroll";
+        WriteDataFile();
+      break;
+
+      case '2' :
+        cout << "Display";
+        ReadDataFile();
+      break;
+
+      case '9' :
+        cout << "Exit time!";
+        boolExitProgram = true;
+      break;
+    }
+  } while (boolExitProgram != true);
+  return 0;
 }
