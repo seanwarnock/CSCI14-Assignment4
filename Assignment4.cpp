@@ -37,25 +37,9 @@ program logic.
 
 using namespace std;
 
-void WriteDataFile ()
-{
+void WriteDataFile (string);
 
-  std::ifstream inFile ("Personnl.Dat", std::ifstream::in);
-  //ifstream inFile(“Personnl.Dat”, ios::ifstream::in);
-  char c = inFile.get();
-
-  while (inFile.good()) {
-    std::cout << c;
-    c = inFile.get();
-  }
-  system("pause");
-}
-
-void ReadDataFile ()
-{
-
-
-}
+void ReadDataFile (string);
 
 int main ()
 {
@@ -76,12 +60,12 @@ int main ()
     {
       case '1' :
         cout << "Payroll";
-        WriteDataFile();
+        WriteDataFile("Personnl.Dat");
       break;
 
       case '2' :
         cout << "Display";
-        ReadDataFile();
+        ReadDataFile("Personnl.Dat");
       break;
 
       case '9' :
@@ -91,4 +75,32 @@ int main ()
     }
   } while (boolExitProgram != true);
   return 0;
+}
+
+
+void WriteDataFile (string FileName)
+{
+
+
+}
+
+void ReadDataFile (string FileName)
+{
+  FileName;
+
+  ifstream inFile (FileName, ifstream::in);
+
+  if (!inFile)
+  {
+    cout << "File note found!";
+    exit(1001);
+  }
+  char c = inFile.get();
+
+  while (inFile.good()) {
+    cout << c;
+    c = inFile.get();
+  }
+  system("pause");
+
 }
