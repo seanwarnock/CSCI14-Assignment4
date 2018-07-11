@@ -64,7 +64,7 @@ int main ()
       break;
 
       case '2' :
-        cout << "Display";
+        //cout << "Display";
         ReadDataFile("Personnl.Dat");
       break;
 
@@ -80,27 +80,82 @@ int main ()
 
 void WriteDataFile (string FileName)
 {
+  ifstream outFile;
+
+  if (!outFile)
+  {
+    cout << "File note found!";
+    exit(666);
+  }
+
+  char c = outFile.get();
 
 
+
+  outFile.close();
+  system("pause");
 }
 
 void ReadDataFile (string FileName)
 {
-  FileName;
+//This function reads the text file and outputs the "records" in the requested format.
 
-  ifstream inFile (FileName, ifstream::in);
+  string ReadFirstName;
+  string ReadLastName;
+  string ReadWorkerID;
+  float ReadHours;
+  float ReadPayRate;
+  float ReadTaxRate;
+  float GrossPay;
+  float TotalTax;
+  float NetPay;
 
+  int counter = 0;
+
+  ifstream inFile;
+
+  inFile.open(FileName);
+
+  system("cls");
   if (!inFile)
   {
     cout << "File note found!";
-    exit(1001);
+    exit(666);
   }
-  char c = inFile.get();
 
-  while (inFile.good()) {
-    cout << c;
-    c = inFile.get();
+  while (!inFile.eof())
+  {
+  //Read each line.  Perform raw calculation on data read.  Finally output information to the screen.
+
+    inFile >> ReadFirstName >> ReadLastName >> ReadWorkerID >> ReadHours >> ReadPayRate >> ReadTaxRate;
+
+    GrossPay = (ReadHours * ReadPayRate);
+    TotalTax = GrossPay * ReadTaxRate;
+    NetPay = GrossPay - TotalTax;
+
+    cout.unsetf(ios::floatfield);
+    cout.precision(1);
+    cout.setf(ios::fixed, ios::floatfield);
+    cout.setf(ios::showpoint);
+
+    cout << "\tRecord #" <<counter << endl;
+    cout << "Employee ID: " << ReadWorkerID << endl;
+    cout << "Last Name: " << ReadLastName << " First Name:" << ReadFirstName << endl;
+    cout << "Hours Worked: " << ReadHours;
+    cout.precision(2);
+    cout << " Pay Per Hour: $" << ReadPayRate << " Gross Pay: $" << GrossPay << endl;
+    cout << "Taxes: $" << TotalTax << " Net Pay: $" << NetPay << endl;
+    cout << "Employee Tax Rate: " << ReadTaxRate << "%" << endl << endl;
+
+    counter++;
+
+    if ((counter % 4) == 0)
+    {
+      system("pause");
+      system("cls");
+    }
   }
+
+  inFile.close();
   system("pause");
-
 }
