@@ -80,16 +80,36 @@ int main ()
 
 void WriteDataFile (string FileName)
 {
-  ifstream outFile;
+  string WriteFirstName;
+  string WriteLastName;
+  string WriteWorkerID;
+  float WriteHours;
+  float WritePayRate;
+  float WriteTaxRate;
+
+  ofstream outFile;
+  outFile.open(FileName, ofstream::out | ofstream::app);
 
   if (!outFile)
   {
-    cout << "File note found!";
+    cout << "File not found!";
     exit(666);
   }
 
-  char c = outFile.get();
+  cout << "First Name : ";
+  cin >> WriteFirstName;
+  cout << endl << "Last Name : ";
+  cin >> WriteLastName;
+  cout << endl << "Worker ID : ";
+  cin >> WriteWorkerID;
+  cout << endl << "Hours : ";
+  cin >> WriteHours;
+  cout << endl << "Pay Rate : ";
+  cin >> WritePayRate;
+  cout << endl << "Tax Rate : ";
+  cin >> WriteTaxRate;
 
+  outFile << endl << WriteFirstName << " " << WriteLastName << " " << WriteWorkerID << " " << WriteHours << " " << WritePayRate << " " << WriteTaxRate;
 
 
   outFile.close();
@@ -119,7 +139,7 @@ void ReadDataFile (string FileName)
   system("cls");
   if (!inFile)
   {
-    cout << "File note found!";
+    cout << "File not found!";
     exit(666);
   }
 
