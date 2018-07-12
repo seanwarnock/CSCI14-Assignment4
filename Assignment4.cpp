@@ -59,13 +59,13 @@ int main ()
     switch  (charMenuChoice)
     {
       case '1' :
-        cout << "Payroll";
-        WriteDataFile("Personnl.Dat");
+        //cout << "Payroll";
+        WriteDataFile("personnel.dat");
       break;
 
       case '2' :
         //cout << "Display";
-        ReadDataFile("Personnl.Dat");
+        ReadDataFile("personnel.dat");
       break;
 
       case '9' :
@@ -86,6 +86,7 @@ void WriteDataFile (string FileName)
   float WriteHours;
   float WritePayRate;
   float WriteTaxRate;
+  int RetryCounter = 0;
 
   ofstream outFile;
   outFile.open(FileName, ofstream::out | ofstream::app);
@@ -106,13 +107,31 @@ void WriteDataFile (string FileName)
   cin >> WriteHours;
   cout << endl << "Pay Rate : ";
   cin >> WritePayRate;
-  cout << endl << "Tax Rate : ";
-  cin >> WriteTaxRate;
+  //First bit of real range checking.
+  do
+  {
+    if (RetryCounter > 0)
+    {
+      system("cls");
+      cout << endl << "You entered an invalid tax rate : ";
+      cin >> WriteTaxRate;
+    }
+    else
+    {
+      cout << endl << "Tax Rate : ";
+      cin >> WriteTaxRate;
+    }
+    RetryCounter++;  //use a bool.
+
+  }while ((WriteTaxRate < 0) && (WriteTaxRate > 100));
+  WriteTaxRate = WriteTaxRate / 100;
+  RetryCounter = 0;
 
   outFile << endl << WriteFirstName << " " << WriteLastName << " " << WriteWorkerID << " " << WriteHours << " " << WritePayRate << " " << WriteTaxRate;
 
 
   outFile.close();
+  cout << "Record created" << endl;
   system("pause");
 }
 
@@ -158,14 +177,14 @@ void ReadDataFile (string FileName)
     cout.setf(ios::fixed, ios::floatfield);
     cout.setf(ios::showpoint);
 
-    cout << "\tRecord #" <<counter << endl;
+    cout << "\tRecord #" << (counter + 1) << endl;
     cout << "Employee ID: " << ReadWorkerID << endl;
-    cout << "Last Name: " << ReadLastName << " First Name:" << ReadFirstName << endl;
+    cout << "Last Name: " << ReadLastName << " First Name: " << ReadFirstName << endl;
     cout << "Hours Worked: " << ReadHours;
     cout.precision(2);
     cout << " Pay Per Hour: $" << ReadPayRate << " Gross Pay: $" << GrossPay << endl;
     cout << "Taxes: $" << TotalTax << " Net Pay: $" << NetPay << endl;
-    cout << "Employee Tax Rate: " << ReadTaxRate << "%" << endl << endl;
+    cout << "Employee Tax Rate: " << (ReadTaxRate * 100)<< "%" << endl << endl;
 
     counter++;
 
